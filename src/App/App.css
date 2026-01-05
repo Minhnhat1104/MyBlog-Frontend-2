@@ -46,4 +46,5 @@ html *::-webkit-scrollbar-track {
 [href] {
   text-decoration: none;
   font-style: normal;
+  color: inherit;
 }

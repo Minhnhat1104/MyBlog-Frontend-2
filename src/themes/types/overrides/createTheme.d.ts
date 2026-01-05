@@ -19,11 +19,11 @@ declare module '@mui/material/styles' {
   interface PaletteOptions extends CustomPalette {}
   interface Theme {
     customShadows: CustomShadowProps;
-    // hanbiro: {
-    //   red: PaletteColor;
-    //   indigo: PaletteColor;
-    //   orange: PaletteColor;
-    // };
+    border: {
+      light: string;
+      main: string;
+      dark: string;
+    };
   }
   // interface ThemeOptions {
   //   hanbiro?: {

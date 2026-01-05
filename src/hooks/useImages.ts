@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import { queryKeys } from "~/config/queryKeys";
-import axios from "~/tools/axios";
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '~/config/queryKeys';
+import axios from '~/tools/axios';
 
 const useImages = (params: { page: number; size: number }) => {
   const res = useQuery({
     queryFn: async () => {
       const res = await axios.get(`/v1/image`, { params });
-      return res.data;
+
+      return res?.data;
     },
 
     queryKey: [queryKeys.imageList, params?.page, params?.size],

@@ -29,7 +29,7 @@ const AxiosContext = ({}: AxiosContextProps) => {
   useEffect(() => {
     const id = axios.interceptors.response.use(
       (res) => {
-        return res?.data;
+        return res;
       },
       (err) => {
         if (err?.response?.status === 401) {
@@ -52,10 +52,6 @@ const AxiosContext = ({}: AxiosContextProps) => {
         }
       }
     })();
-
-    return () => {
-      axios.interceptors.response.eject(id);
-    };
   }, []);
 
   useEffect(() => {

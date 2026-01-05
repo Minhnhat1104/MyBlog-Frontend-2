@@ -1,21 +1,17 @@
-import React, { lazy } from "react";
+import React, { lazy } from 'react';
 
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
-import useImages from "~/hooks/useImages";
+import useImages from '~/hooks/useImages';
 
-import { ImageList, ImageListItem } from "@mui/material";
-import LoadingCircular from "~/components/LoadingCircular";
-import { useImageMutation } from "~/hooks/useImageMutation";
-import { Paging } from "~/types";
-import { useRecoilValue } from "recoil";
-import { userState } from "~/atoms";
-import NoData from "~/components/NoData";
-import { BASE_URL } from "~/config/config";
-import Item from "./Item";
+import { ImageList, ImageListItem } from '@mui/material';
+import LoadingCircular from '~/components/LoadingCircular';
+import { useImageMutation } from '~/hooks/useImageMutation';
+import { Paging } from '~/types';
+import NoData from '~/components/NoData';
+import Item from './Item';
 
 function Home() {
-  const user = useRecoilValue(userState);
   const [allImages, setAllImages] = useState([]);
   const [paging, setPaging] = useState<Paging>({ page: 1, size: 10 });
   const { data, isInitialLoading, error } = useImages({
@@ -23,7 +19,7 @@ function Home() {
     size: paging?.size,
   });
 
-  const items = data;
+  const items = data?.data;
   const { mDelete } = useImageMutation();
 
   const handleDelete = useCallback(async (_id: string) => {
@@ -40,7 +36,7 @@ function Home() {
   }, []);
 
   if (error) {
-    console.log("Error:", error);
+    console.log('Error:', error);
     return <p>Error: </p>;
   }
 

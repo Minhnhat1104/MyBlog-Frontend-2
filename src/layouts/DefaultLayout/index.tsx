@@ -1,38 +1,22 @@
 import Header from '../Component/Header';
 import React from 'react';
-import { Box, Stack } from '@mui/material';
-import { defaultLayoutHeaderHeight, defaultLayoutWidth } from '~/config/config';
+import { Box, Container, Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
 function BackgroundLayout({ children }: any) {
   return (
     <Stack height={'100vh'}>
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          webkitBackgroundSize: 'cover',
-          mozBackgroundSize: 'cover',
-          oBackgroundSize: 'cover',
-          backgroundSize: 'cover',
-          zIndex: -1,
-        }}
-      ></Box>
       <Header />
 
-      <Box
+      <Container
         sx={{
           flex: 1,
           minHeight: 0,
-          mx: 3,
-          overflowY: 'auto',
+          py: 2,
         }}
       >
         <Outlet />
-      </Box>
+      </Container>
     </Stack>
   );
 }
