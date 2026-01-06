@@ -10,6 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import ImageDropZone from '~/components/ImageDropZone';
+import { useAlbumMutation } from '~/hooks/Album/useAlbumMutation';
 
 interface WriteProps {
   isOpen: boolean;
@@ -19,7 +20,7 @@ interface WriteProps {
 interface UploadFormData {
   name: string;
   description: string;
-  images: File[];
+  photos: File[];
 }
 
 function Write(props: WriteProps) {
@@ -28,7 +29,7 @@ function Write(props: WriteProps) {
   const queryClient = useQueryClient();
   const user = useRecoilValue(userState);
 
-  const { mUpload } = useImageMutation();
+  const { mCreate } = useAlbumMutation();
 
   const {
     register,
@@ -40,12 +41,12 @@ function Write(props: WriteProps) {
 
   const onSubmit: SubmitHandler<UploadFormData> = async (data) => {
     const formData = new FormData();
-    formData.append('imageFile', data?.images?.[0]);
+    formData.append('photos', data?.photos?.[0]);
     formData.append('name', data?.name);
     formData.append('description', data?.description);
     formData.append('creator_id', user?.id?.toString() || '');
 
-    mUpload.mutate(formData, {
+    mCreate.mutate(formData, {
       onSuccess(data, variables, context) {
         setTimeout(() => {
           queryClient.invalidateQueries([queryKeys.imageList]);
@@ -55,7 +56,7 @@ function Write(props: WriteProps) {
   };
 
   return (
-    <MiModal title={'Post Image'} isOpen={isOpen} size="sm" onClose={onClose} allowFullScreen>
+    <MiModal title={'Create album'} isOpen={isOpen} size="sm" onClose={onClose} allowFullScreen>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2} width={'100%'} alignItems="flex-start" p={2}>
           <TextField
@@ -77,7 +78,7 @@ function Write(props: WriteProps) {
           />
 
           <Controller
-            name="images"
+            name="photos"
             control={control}
             render={({ field }) => <ImageDropZone value={field?.value} onChange={field?.onChange} />}
           />
@@ -85,7 +86,7 @@ function Write(props: WriteProps) {
           <Stack direction="row" justifyContent="center" width={1}>
             <Button
               type="submit"
-              loading={mUpload.isPending}
+              loading={mCreate.isPending}
               variant="contained"
               sx={{ width: 'fit-content', margin: 'auto' }}
             >

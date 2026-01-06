@@ -6,6 +6,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import PasswordInput from '~/components/PasswordInput';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '~/atoms';
+import { useSnackbar } from '~/hooks/useSnackbar';
 
 type LoginFormData = {
   email: string;
@@ -16,6 +17,7 @@ function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
   const { mUserLogin } = useAuthMutation();
+  const { enqueueError } = useSnackbar();
   const setUser = useSetRecoilState(userState);
 
   const {
@@ -33,7 +35,10 @@ function Login() {
       },
       {
         onSuccess: (res) => {
-          setUser(res?.data);
+          if (!res?.data?.rows?.id) {
+            enqueueError('Invalid login response data!');
+          }
+          setUser(res?.data?.rows);
           navigate('/home');
         },
       }

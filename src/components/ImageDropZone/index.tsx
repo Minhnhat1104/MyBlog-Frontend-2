@@ -42,7 +42,7 @@ function ImageDropZone({ name, value, onChange, disabled = false }: ImageDropZon
   const theme = useTheme();
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
     disabled,
-    maxFiles: 1,
+    // maxFiles: 1,
     accept: { 'image/*': [] },
     onDropAccepted(files, event) {
       onChange(

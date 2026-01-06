@@ -8,11 +8,13 @@ export const useAlbumMutation = () => {
   const mCreate = useMutation({
     mutationKey: [queryKeys.albumCreate],
     mutationFn: async (params: any) => {
-      await axios.post('/v1/album/create', params, {
+      const res = await axios.post('/v1/album/create', params, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      return res;
     },
     onSuccess(data: any, variables, context) {
       enqueueSuccess('Update Images successfully!');

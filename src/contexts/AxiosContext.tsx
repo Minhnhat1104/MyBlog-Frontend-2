@@ -44,7 +44,7 @@ const AxiosContext = ({}: AxiosContextProps) => {
       if (refreshToken) {
         try {
           const res = await axios.post('/v1/auth/refresh');
-          setUser(res?.data);
+          setUser(res?.data?.rows);
         } catch (e) {
           console.log('Get infor error:', e);
         } finally {
@@ -72,7 +72,7 @@ const AxiosContext = ({}: AxiosContextProps) => {
             };
 
             setUser(newUser);
-            config.headers['token'] = `Bearer ${res?.data?.accessToken}`;
+            config.headers['token'] = `Bearer ${res?.data?.rows?.accessToken}`;
           } else {
             config.headers['token'] = `Bearer ${user?.accessToken}`;
           }
