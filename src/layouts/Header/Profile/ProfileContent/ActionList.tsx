@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography, useTheme } from '@mui/material';
 
 import { LabelValue } from '~/types';
-import { LockOutlined, LogoutOutlined, SettingsOutlined, SvgIconComponent } from '@mui/icons-material';
+import { LockOutlined, LogoutOutlined, PersonOutline, SettingsOutlined, SvgIconComponent } from '@mui/icons-material';
 
 interface ActionListProps {
   handleLogout: () => void;
@@ -13,33 +13,37 @@ interface ActionListProps {
 }
 
 interface ProfileItemInterface extends LabelValue<string, number> {
-  url: string;
   icon: SvgIconComponent;
-  onClick?: () => void; // if onClick is defined, url is not used
+  onClick: () => void; // if onClick is defined, url is not used
 }
 
 const ActionList = (props: ActionListProps) => {
   const { handleLogout, onAfterClick } = props;
   const navigate = useNavigate();
-  const theme = useTheme();
 
   const profileItems: ProfileItemInterface[] = [
     {
-      label: 'Setting',
+      label: 'Your profile',
       value: 0,
-      url: 'setting',
+      onClick: () => navigate('/profile'),
+      icon: PersonOutline,
+    },
+    {
+      label: 'Setting',
+      value: 1,
+      onClick: () => navigate('/setting'),
       icon: SettingsOutlined,
     },
     {
       label: 'Change password',
-      value: 1,
-      url: 'change-password',
+      value: 2,
+      onClick: () => navigate('/change-password'),
       icon: LockOutlined,
     },
     {
       label: 'Logout',
-      value: 2,
-      url: 'logout',
+      value: 3,
+      onClick: () => handleLogout(),
       icon: LogoutOutlined,
     },
   ];
@@ -52,8 +56,12 @@ const ActionList = (props: ActionListProps) => {
         return (
           <ListItem disablePadding>
             <ListItemButton
-            // LinkComponent={NavLink}
-            // selected={isActive}
+              LinkComponent={Link}
+              onClick={() => {
+                _item?.onClick();
+                onAfterClick && onAfterClick();
+              }}
+              // selected={isActive}
             >
               <ListItemIcon sx={{ minWidth: 32 }}>
                 <Icon sx={{ fontSize: 20 }} />
