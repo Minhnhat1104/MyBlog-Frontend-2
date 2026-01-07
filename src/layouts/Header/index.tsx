@@ -11,6 +11,7 @@ import { ImageOutlined, UploadOutlined } from '@mui/icons-material';
 import { COOKIE_KEY, cookieService } from '~/tools/storages';
 import ThemeToggle from '~/components/ThemeToggle';
 import Profile from './Profile';
+import NavList from './NavList';
 
 function Header() {
   const [user, setUser] = useRecoilState(userState);
@@ -59,20 +60,23 @@ function Header() {
             </Stack>
           </Link>
           {user ? (
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <IconButton size="medium" onClick={() => setOpenWrite(true)}>
-                <UploadOutlined />
-              </IconButton>
-              <IconButton size="medium" href="/">
-                <ImageOutlined />
-              </IconButton>
-              <ThemeToggle />
-              {/* <Typography pr={1}>{user.username}</Typography>
-              <Button size="medium" variant="outlined" onClick={handleLogout}>
-                Log Out
-              </Button> */}
-              <Profile />
-            </Stack>
+            <>
+              <NavList />
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <IconButton size="medium" onClick={() => setOpenWrite(true)}>
+                  <UploadOutlined />
+                </IconButton>
+                <IconButton size="medium" href="/">
+                  <ImageOutlined />
+                </IconButton>
+                <ThemeToggle />
+                {/* <Typography pr={1}>{user.username}</Typography>
+                <Button size="medium" variant="outlined" onClick={handleLogout}>
+                  Log Out
+                </Button> */}
+                <Profile />
+              </Stack>
+            </>
           ) : (
             <Stack direction="row" alignItems="center" spacing={1}>
               <Button component={Link} variant="contained" to="/login">
