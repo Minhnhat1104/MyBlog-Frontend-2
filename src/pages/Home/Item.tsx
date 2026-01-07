@@ -1,9 +1,12 @@
-import { DownloadOutlined, FavoriteBorderOutlined } from '@mui/icons-material';
+import { DownloadOutlined, Favorite, FavoriteBorderOutlined } from '@mui/icons-material';
 import { IconButton, ImageListItem, ImageListItemBar, Slide, Stack, Typography } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { BASE_URL } from '~/config/config';
 import BlurIconButton from './BlurIconButton';
 import { downloadURI } from '~/tools/image';
+import { useImageMutation } from '~/hooks/Image/useImageMutation';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '~/config/queryKeys';
 
 interface ItemProps {
   data: any;
@@ -11,10 +14,29 @@ interface ItemProps {
 
 const Item = ({ data }: ItemProps) => {
   const containerRef = useRef<HTMLLIElement>(null);
+  const queryClient = useQueryClient();
 
   const [isHover, setIsHover] = useState(false);
 
+  const { mSetFavorite } = useImageMutation();
+
   const imageSrc = `${BASE_URL}/v1/image/file/${data?.id}`;
+
+  const handleFavorite = async () => {
+    await mSetFavorite.mutateAsync(
+      {
+        imageId: data?.id,
+        favorite: !data?.favorite,
+      },
+      {
+        onSuccess(data, variables, context) {
+          queryClient.invalidateQueries({
+            queryKey: [queryKeys.imageList],
+          });
+        },
+      }
+    );
+  };
 
   return (
     <ImageListItem
@@ -38,10 +60,11 @@ const Item = ({ data }: ItemProps) => {
 
       <Slide in={isHover} direction="left" container={containerRef.current} timeout={200}>
         <BlurIconButton
+          onClick={handleFavorite}
           sx={{ color: 'white', position: 'absolute', top: 8, right: 8 }}
-          {...(data?.favotire
+          {...(data?.favorite
             ? {
-                icon: FavoriteBorderOutlined,
+                icon: Favorite,
                 iconColor: 'error',
               }
             : {
