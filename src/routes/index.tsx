@@ -9,6 +9,7 @@ import { Navigate, type RouteObject } from 'react-router-dom';
 import AxiosContext from '~/contexts/AxiosContext';
 import Demo from '~/pages/Demo';
 import { demoRoute } from '~/pages/Demo/demoRoute';
+import Profile from '~/pages/Profile';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -37,6 +38,10 @@ const publicRoutes: RouteObject[] = [
           {
             path: '/home',
             element: <Home />,
+          },
+          {
+            path: '/profile',
+            element: <Profile />,
           },
           {
             path: '/demo',
