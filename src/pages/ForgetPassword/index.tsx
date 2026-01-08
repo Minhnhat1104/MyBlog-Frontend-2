@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, Stack, TextField, Typography, useTheme } from '@mui/material';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { type SubmitHandler, useForm } from 'react-hook-form';
@@ -7,6 +7,7 @@ import PasswordInput from '~/components/PasswordInput';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '~/atoms';
 import { useSnackbar } from '~/hooks/useSnackbar';
+import { ArrowBack } from '@mui/icons-material';
 
 type ForgetPasswordFormData = {
   email: string;
@@ -51,9 +52,11 @@ function ForgetPassword() {
         spacing={3}
       >
         <Typography variant="h1" fontWeight={500} textAlign="center">
-          Forget password
+          Forgot password?
         </Typography>
-        <Typography>No worries, we 'll send you reset instruction.</Typography>
+        <Typography color="text.secondary" textAlign="center">
+          No worries, we 'll send you reset instruction.
+        </Typography>
         <TextField
           label="Email"
           helperText={errors.email?.message}
@@ -64,14 +67,17 @@ function ForgetPassword() {
         <Button type="submit" variant="contained">
           Reset password
         </Button>
-        <Button
-          variant="text"
-          onClick={() => {
-            navigate('/login');
-          }}
+        <Stack
+          direction="row"
+          alignItems="center"
+          component={Link}
+          to={'/login'}
+          justifyContent="center"
+          color="primary.main"
         >
-          Back to login
-        </Button>
+          <ArrowBack fontSize="small" sx={{ mr: 1 }} />
+          <Typography>Back to login</Typography>
+        </Stack>
       </Stack>
     </form>
   );

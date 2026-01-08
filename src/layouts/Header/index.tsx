@@ -51,7 +51,7 @@ function Header() {
             justifyContent: 'space-between',
           }}
         >
-          <Link to="/">
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <Stack direction="row" alignItems="center" spacing={1} height={'100%'}>
               <img style={{ width: 40, height: 40 }} src={logo} alt="Logo" />
               <Typography fontWeight="500" fontSize={24} fontStyle={'Italic'}>

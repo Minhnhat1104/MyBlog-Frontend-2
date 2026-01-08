@@ -1,9 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Grid, Stack, TextField, Typography, useTheme } from '@mui/material';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import PasswordInput from '~/components/PasswordInput';
+import { ArrowBack } from '@mui/icons-material';
 
 type RegisterFormData = {
   email: string;
@@ -99,6 +100,17 @@ function Register() {
           <Button type="submit" variant="contained">
             Create account
           </Button>
+          <Stack
+            direction="row"
+            alignItems="center"
+            component={Link}
+            to={'/login'}
+            justifyContent="center"
+            color="primary.main"
+          >
+            <ArrowBack fontSize="small" sx={{ mr: 1 }} />
+            <Typography>Back to login</Typography>
+          </Stack>
         </Stack>
       </form>
     </section>

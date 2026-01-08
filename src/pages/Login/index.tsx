@@ -1,6 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box, Button, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { Box, Button, Checkbox, FormControlLabel, Stack, TextField, Typography, useTheme } from '@mui/material';
 import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import PasswordInput from '~/components/PasswordInput';
@@ -54,7 +54,6 @@ function Login() {
           borderRadius: 3,
           width: 600,
         }}
-        spacing={3}
       >
         <Typography variant="h1" fontWeight={500} textAlign="center">
           Welcome back
@@ -66,21 +65,39 @@ function Login() {
           type="email"
           {...register('email', { required: true, maxLength: 50 })}
         />
-        <PasswordInput
-          label="Password"
-          helperText={errors.password?.message}
-          error={!!errors.password}
-          {...register('password', { required: true, maxLength: 50 })}
-        />
-        <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
-          <Typography>Don't have an account yet?</Typography>
-          <Box sx={{ cursor: 'pointer' }} onClick={() => navigate('/register')}>
-            <Typography color={theme.palette.primary.main}>Register one for free</Typography>
-          </Box>
+
+        <Stack width={1} mt={3}>
+          <PasswordInput
+            label="Password"
+            helperText={errors.password?.message}
+            error={!!errors.password}
+            {...register('password', { required: true, maxLength: 50 })}
+          />
+
+          <Stack direction="row" width={1} alignItems="center" justifyContent="space-between" mt={1}>
+            <FormControlLabel control={<Checkbox defaultChecked size="small" />} label="Remember me" />
+
+            <Typography
+              color={theme.palette.primary.main}
+              component={Link}
+              to="/forgot-password"
+              sx={{ textAlign: 'right' }}
+            >
+              Forgot password
+            </Typography>
+          </Stack>
         </Stack>
-        <Button type="submit" variant="contained">
+
+        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
           Log in
         </Button>
+        <Stack direction="row" spacing={1} alignItems="center" justifyContent="center" mt={3}>
+          <Typography>Don't have an account yet?</Typography>
+
+          <Typography color={theme.palette.primary.main} component={Link} to="/register">
+            Register one for free
+          </Typography>
+        </Stack>
       </Stack>
     </form>
   );
