@@ -4,6 +4,9 @@ export const queryKeys = {
   userLogout: 'userLogout',
   userSendForgetPassword: 'userSendForgetPassword',
   userResetPassword: 'userResetPassword',
+  //user
+  userUpdateProfile: 'userUpdateProfile',
+  userSetAvatar: 'userSetAvatar',
   // Image
   imageUpload: 'imageUpload',
   imageDelete: 'imageDelete',

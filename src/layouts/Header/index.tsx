@@ -38,8 +38,9 @@ function Header() {
           // position: 'fixed',
           top: 0,
           zIndex: 1,
-          boxShadow: `0 3px 6px ${theme.palette.divider}`,
+          // boxShadow: `0 3px 6px ${theme.palette.divider}`,
           background: theme.palette.background.paper,
+          borderBottom: theme.border.light,
         }}
       >
         <Container

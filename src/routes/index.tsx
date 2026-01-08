@@ -36,6 +36,10 @@ const publicRoutes: RouteObject[] = [
             path: '/reset-password',
             element: <ResetPassword />,
           },
+          {
+            path: '/profile',
+            element: <Profile />,
+          },
         ],
       },
       {
@@ -53,10 +57,7 @@ const publicRoutes: RouteObject[] = [
             path: '/my-photos',
             element: <Home my />,
           },
-          {
-            path: '/profile',
-            element: <Profile />,
-          },
+
           {
             path: '/demo',
             element: <Demo />,

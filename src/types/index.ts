@@ -1,9 +1,11 @@
 export interface User {
-  id: number;
-  username: string;
-  password: string;
-  admin?: boolean;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar_id: string;
+  admin: boolean;
   accessToken: string;
+  id: number;
 }
 
 export interface Paging {

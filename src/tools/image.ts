@@ -1,3 +1,5 @@
+import { BASE_URL } from '~/config/config';
+
 export function downloadURI(uri: string, name: string) {
   var link = document.createElement('a');
   link.download = name;
@@ -6,3 +8,7 @@ export function downloadURI(uri: string, name: string) {
   link.click();
   document.body.removeChild(link);
 }
+
+export const getUserAvatarSrc = (id: number | string) => {
+  return `${BASE_URL}/v1/user/avatar?id=${id}`;
+};

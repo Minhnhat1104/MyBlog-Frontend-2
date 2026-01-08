@@ -6,34 +6,45 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import PasswordInput from '~/components/PasswordInput';
 import userImagePlaceholder from '~/assets/img/UserPlaceholder.png';
 import { validationRegex } from '~/tools/regexs';
+import { useRecoilValue } from 'recoil';
+import { userState } from '~/atoms';
+import { useUserMutation } from '~/hooks/useUserMutation';
+import AvatarWrite from './AvatarWrite';
 
-type RegisterFormData = {
+type ProfileFormData = {
   email: string;
   firstName: string;
   lastName: string;
-  password: string;
-  phone: number;
+  phone: string;
 };
 
-function Register() {
+function Profile() {
   const theme = useTheme();
   const navigate = useNavigate();
-  const { mRegisterUser } = useAuthMutation();
+  const { mProfileUpdate } = useUserMutation();
+  const user = useRecoilValue(userState);
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<RegisterFormData>();
+  } = useForm<ProfileFormData>({
+    defaultValues: {
+      email: user?.email,
+      firstName: user?.first_name,
+      lastName: user?.last_name,
+      phone: '',
+    },
+  });
 
-  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
-    const res = await mRegisterUser.mutateAsync(
+  const onSubmit: SubmitHandler<ProfileFormData> = async (data) => {
+    const res = await mProfileUpdate.mutateAsync(
       {
         email: data?.email,
         firstName: data?.firstName,
         lastName: data?.lastName,
-        password: data?.password,
+        phone: data?.phone,
       },
       {
         onSuccess: () => {
@@ -58,18 +69,7 @@ function Register() {
           Profile settings
         </Typography>
 
-        <Stack direction="row" alignItems="center" spacing={3}>
-          <Avatar
-            alt="avatar"
-            src={userImagePlaceholder}
-            sx={{
-              width: 60,
-              height: 60,
-            }}
-          />
-
-          <Button variant="contained">Change avatar</Button>
-        </Stack>
+        <AvatarWrite />
         <Grid container spacing={3}>
           <Grid size={6}>
             <TextField
@@ -106,7 +106,7 @@ function Register() {
           })}
         />
 
-        <TextField
+        {/* <TextField
           fullWidth
           size="medium"
           label="Phone"
@@ -117,14 +117,8 @@ function Register() {
             required: true,
             pattern: validationRegex.phone,
           })}
-        />
-        {/* <PasswordInput
-          label="Password"
-          helperText={errors.password?.message}
-          error={!!errors.password}
-          {...register('password', { required: true, maxLength: 50 })}
         /> */}
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" loading={mProfileUpdate.isPending}>
           Save profile
         </Button>
       </Stack>
@@ -132,4 +126,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Profile;
