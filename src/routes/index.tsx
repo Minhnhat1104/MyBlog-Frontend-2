@@ -10,6 +10,8 @@ import AxiosContext from '~/contexts/AxiosContext';
 import Demo from '~/pages/Demo';
 import { demoRoute } from '~/pages/Demo/demoRoute';
 import Profile from '~/pages/Profile';
+import ForgetPassword from '~/pages/ForgetPassword';
+import ResetPassword from '~/pages/ResetPassword';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -26,6 +28,14 @@ const publicRoutes: RouteObject[] = [
             path: '/register',
             element: <Register />,
           },
+          {
+            path: '/forgot-password',
+            element: <ForgetPassword />,
+          },
+          {
+            path: '/reset-password',
+            element: <ResetPassword />,
+          },
         ],
       },
       {
@@ -36,7 +46,11 @@ const publicRoutes: RouteObject[] = [
             element: <Update />,
           },
           {
-            path: '/home',
+            path: '/explore',
+            element: <Home />,
+          },
+          {
+            path: '/my',
             element: <Home />,
           },
           {
@@ -52,7 +66,7 @@ const publicRoutes: RouteObject[] = [
       },
       {
         index: true,
-        element: <Navigate to="/home" />,
+        element: <Navigate to="/explore" />,
       },
     ],
   },

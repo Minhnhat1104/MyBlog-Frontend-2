@@ -12,11 +12,11 @@ export const useAuthMutation = () => {
 
       return res;
     },
-    onSuccess(data: any, variables, context) {
+    onSuccess(res: any, variables, context) {
       enqueueSuccess('Register user successfully!');
     },
-    onError(data: any, variables, context) {
-      enqueueError(data?.msg || 'Register user failed!');
+    onError(res: any, variables, context) {
+      enqueueError(res?.data?.msg || 'Register user failed!');
     },
   });
 
@@ -42,13 +42,47 @@ export const useAuthMutation = () => {
 
       return res;
     },
-    onSuccess(data: any, variables, context) {
+    onSuccess(res: any, variables, context) {
       enqueueSuccess('Logout successfully!');
     },
-    onError(data: any, variables, context) {
-      enqueueError(data?.msg || 'Logout failed!');
+    onError(res: any, variables, context) {
+      enqueueError(res?.data?.msg || 'Logout failed!');
     },
   });
 
-  return { mRegisterUser, mUserLogin, mUserLogout };
+  const mUserForgetPassword = useMutation({
+    mutationKey: [queryKeys.userSendForgetPassword],
+    mutationFn: async (params: any) => {
+      const res = await axios.post('/v1/auth/forgot-password', params);
+
+      return res;
+    },
+    onSuccess(res: any, variables, context) {
+      enqueueSuccess(res?.data?.msg || 'Logout successfully!');
+    },
+    onError(res: any, variables, context) {
+      enqueueError(res?.data?.msg || 'Logout failed!');
+    },
+  });
+
+  const mUserResetPassword = useMutation({
+    mutationKey: [queryKeys.userResetPassword],
+    mutationFn: async (params: any) => {
+      const res = await axios.post('/v1/auth/reset-password', params);
+
+      return res;
+    },
+    onSuccess(res: any, variables, context) {
+      if (res?.data?.msg) {
+        enqueueSuccess(res?.data?.msg);
+      }
+    },
+    onError(res: any, variables, context) {
+      if (res?.data?.msg) {
+        enqueueError(res?.data?.msg);
+      }
+    },
+  });
+
+  return { mRegisterUser, mUserLogin, mUserLogout, mUserForgetPassword, mUserResetPassword };
 };

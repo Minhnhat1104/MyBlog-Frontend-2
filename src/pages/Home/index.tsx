@@ -11,7 +11,11 @@ import { Paging } from '~/types';
 import NoData from '~/components/NoData';
 import Item from './Item';
 
-function Home() {
+interface HomeProps {
+  my?: boolean;
+}
+
+function Home({ my }: HomeProps) {
   const [allImages, setAllImages] = useState([]);
   const [paging, setPaging] = useState<Paging>({ page: 1, size: 10 });
   const {
@@ -21,6 +25,7 @@ function Home() {
   } = useImages({
     page: paging?.page,
     size: paging?.size,
+    my,
   });
 
   const items = res?.data?.rows;

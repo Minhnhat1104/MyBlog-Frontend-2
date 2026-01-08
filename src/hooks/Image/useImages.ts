@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '~/config/queryKeys';
 import axios from '~/tools/axios';
 
-const useImages = (params: { page: number; size: number }) => {
+const useImages = (params: any) => {
   const res = useQuery({
     queryFn: async () => {
       const res = await axios.get(`/v1/image`, { params });
