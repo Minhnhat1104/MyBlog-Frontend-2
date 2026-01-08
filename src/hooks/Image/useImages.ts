@@ -10,7 +10,7 @@ const useImages = (params: any) => {
       return res;
     },
 
-    queryKey: [queryKeys.imageList, params?.page, params?.size],
+    queryKey: [queryKeys.imageList, params],
     keepPreviousData: true,
   });
 

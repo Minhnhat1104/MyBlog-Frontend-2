@@ -50,8 +50,8 @@ const publicRoutes: RouteObject[] = [
             element: <Home />,
           },
           {
-            path: '/my',
-            element: <Home />,
+            path: '/my-photos',
+            element: <Home my />,
           },
           {
             path: '/profile',

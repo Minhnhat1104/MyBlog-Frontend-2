@@ -1,67 +1,27 @@
 import { Button, Stack } from '@mui/material';
+import { Link, useMatch } from 'react-router-dom';
+import { LabelValue } from '~/types';
+import Item from './Item';
+
+const items: LabelValue[] = [
+  {
+    label: 'Explore',
+    value: '/explore',
+  },
+  {
+    label: 'My photos',
+    value: '/my-photos',
+  },
+];
 
 const NavList = () => {
+  const isExplore = useMatch('/explore');
+  const isMyPhoto = useMatch('/my-photos');
   return (
     <Stack direction="row" alignItems="center" component="nav">
-      <Button
-        size="large"
-        sx={{
-          position: 'relative',
-          color: 'text.primary',
-          textTransform: 'none',
-          fontWeight: 500,
-
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            left: 0,
-            bottom: 0,
-            width: '100%',
-            height: '2px',
-            backgroundColor: 'primary.main',
-            transform: 'scaleX(0)',
-            transformOrigin: 'left',
-            transition: 'transform 0.3s ease',
-          },
-
-          '&:hover::after': {
-            transform: 'scaleX(1)',
-            transformOrigin: 'left',
-          },
-        }}
-      >
-        Explore
-      </Button>
-
-      <Button
-        size="large"
-        sx={{
-          position: 'relative',
-          color: 'text.primary',
-          textTransform: 'none',
-          fontWeight: 500,
-
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            left: 0,
-            bottom: 0,
-            width: '100%',
-            height: '2px',
-            backgroundColor: 'primary.main',
-            transform: 'scaleX(0)',
-            transformOrigin: 'left',
-            transition: 'transform 0.3s ease',
-          },
-
-          '&:hover::after': {
-            transform: 'scaleX(1)',
-            transformOrigin: 'left',
-          },
-        }}
-      >
-        My Photos
-      </Button>
+      {items?.map((_item) => (
+        <Item key={_item?.value} data={_item} />
+      ))}
     </Stack>
   );
 };
