@@ -20,8 +20,8 @@ export interface KonvaEditorHandle {
 const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditorProps> = ({ imageUrl }, ref) => {
   const theme = useTheme();
   const { enqueueError } = useSnackbar();
-  const imageRef = useRef<Konva.Image | null>(null);
   const stageRef = useRef<Konva.Stage | null>(null);
+  const [imageRef, setImageRef] = useState<Konva.Image | null>(null);
   const [image] = useImage(imageUrl, 'anonymous');
   const [filter, setFilter] = useState<Record<FilterType, number>>({
     scale: 1,
@@ -50,13 +50,12 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
 
   // when image is loaded we need to cache the shape
   useEffect(() => {
-    if (image) {
-      // you many need to reapply cache on some props changes like shadow, stroke, etc.
-      imageRef.current?.cache();
+    if (imageRef) {
+      imageRef?.cache();
     }
-  }, [image]);
+  }, [imageRef]);
 
-  const coverScale = useMemo(() => {
+  const coverScale = useMemo<number>(() => {
     if (!image) return 1;
     return Math.min(STAGE_SIZE / image.width, STAGE_SIZE / image.height);
   }, [image]);
@@ -76,7 +75,7 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
           <Stage width={400} height={400} ref={stageRef}>
             <Layer>
               <KonvaImage
-                ref={imageRef}
+                ref={setImageRef}
                 image={image}
                 x={STAGE_SIZE / 2}
                 y={STAGE_SIZE / 2}
