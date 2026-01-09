@@ -29,7 +29,6 @@ function ImageEditModal(props: ImageEditModalProps) {
   const { enqueueError } = useSnackbar();
 
   const { mEditImage } = useImageMutation();
-  console.log('🚀 ~ ImageEditModal ~ imageId:', imageId);
 
   const onSubmit = async () => {
     const formData = new FormData();
@@ -54,7 +53,7 @@ function ImageEditModal(props: ImageEditModalProps) {
   return (
     <MiModal title={'Edit image'} isOpen={isOpen} size="xs" onClose={onClose} allowFullScreen>
       <Stack spacing={2} width={'100%'} alignItems="flex-start" p={2}>
-        <KonvaEditor imageUrl={getImageSrc(imageId)} />
+        <KonvaEditor ref={editorRef} imageUrl={'https://konvajs.org/assets/darth-vader.jpg'} />
 
         <Stack direction="row" justifyContent="center" width={1}>
           <Button

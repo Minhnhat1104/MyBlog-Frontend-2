@@ -44,6 +44,8 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
         lastModified: Date.now(),
       });
 
+      enqueueError('This function is on develop');
+      return null;
       return file;
     },
   }));
@@ -51,7 +53,7 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
   // when image is loaded we need to cache the shape
   useEffect(() => {
     if (imageRef) {
-      imageRef?.cache();
+      // imageRef?.cache();
     }
   }, [imageRef]);
 
