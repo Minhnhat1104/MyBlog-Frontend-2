@@ -10,6 +10,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import LoadingCircular from '~/components/LoadingCircular';
 import { COOKIE_KEY, cookieService } from '~/tools/storages';
 import { BASE_URL } from '~/config/config';
+import { lowerCase } from 'lodash';
 
 interface AxiosContextProps {}
 
@@ -20,7 +21,7 @@ const refreshAxios = originAxios.create({
 
 const AxiosContext = ({}: AxiosContextProps) => {
   const [user, setUser] = useRecoilState(userState);
-  const { enqueueError } = useSnackbar();
+  const { enqueueError, enqueueSuccess } = useSnackbar();
   const navigate = useNavigate();
 
   const refreshToken = cookieService.get(COOKIE_KEY.REFRESH_TOKEN);
@@ -29,12 +30,19 @@ const AxiosContext = ({}: AxiosContextProps) => {
   useEffect(() => {
     const id = axios.interceptors.response.use(
       (res) => {
+        if (res?.status && res?.data?.msg && lowerCase(res?.config?.method) !== 'get') {
+          enqueueSuccess(res?.data?.msg);
+        }
+
         return res;
       },
       (err) => {
         if (err?.response?.status === 401) {
           navigate('/login');
           setUser(null);
+        }
+        if (err?.response?.data?.msg) {
+          enqueueError(err?.response?.data?.msg);
         }
         if (err?.response?.data) err.data = err?.response?.data;
         return Promise.reject(err);

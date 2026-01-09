@@ -55,7 +55,7 @@ function Login() {
           width: 600,
         }}
       >
-        <Typography variant="h1" fontWeight={500} textAlign="center">
+        <Typography variant="h1" fontWeight={500} textAlign="center" mb={3}>
           Welcome back
         </Typography>
         <TextField

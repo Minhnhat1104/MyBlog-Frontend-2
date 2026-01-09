@@ -1,10 +1,8 @@
 import axios from '~/tools/axios';
 import { useMutation } from '@tanstack/react-query';
-import { useSnackbar } from '~/hooks/useSnackbar';
 import { queryKeys } from '~/config/queryKeys';
 
 export const useImageMutation = () => {
-  const { enqueueSuccess, enqueueError } = useSnackbar();
   const mUpload = useMutation({
     mutationKey: [queryKeys.imageUpload],
     mutationFn: async (params: any) => {
@@ -16,12 +14,6 @@ export const useImageMutation = () => {
 
       return res;
     },
-    onSuccess(data: any, variables, context) {
-      enqueueSuccess('Update Images successfully!');
-    },
-    onError(data: any, variables, context) {
-      enqueueError('Update Images fail!');
-    },
   });
 
   const mDelete = useMutation({
@@ -30,12 +22,6 @@ export const useImageMutation = () => {
       const res = await axios.delete('/v1/image/delete', params);
 
       return res;
-    },
-    onSuccess(data: any, variables, context) {
-      enqueueSuccess('Delete image successfully!');
-    },
-    onError(data, variables, context) {
-      enqueueError('Delete image failed!');
     },
   });
 
@@ -46,13 +32,25 @@ export const useImageMutation = () => {
 
       return res;
     },
-    onSuccess(data: any, variables, context) {
-      enqueueSuccess('Like image successfully!');
-    },
-    onError(data, variables, context) {
-      enqueueError('Like image failed!');
+  });
+
+  const mUploadEditImage = useMutation({
+    mutationKey: [queryKeys.imageEdit],
+    mutationFn: async (params: any) => {
+      const res = await axios.post('/v1/image/edit', params);
+
+      return res;
     },
   });
 
-  return { mUpload, mDelete, mSetFavorite };
+  const mResetEditImage = useMutation({
+    mutationKey: [queryKeys.imageReset],
+    mutationFn: async (params: any) => {
+      const res = await axios.post('/v1/image/reset', params);
+
+      return res;
+    },
+  });
+
+  return { mUpload, mDelete, mSetFavorite, mUploadEditImage, mResetEditImage };
 };

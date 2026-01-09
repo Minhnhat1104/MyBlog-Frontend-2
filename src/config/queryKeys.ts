@@ -11,6 +11,8 @@ export const queryKeys = {
   imageUpload: 'imageUpload',
   imageDelete: 'imageDelete',
   imageFavorite: 'imageFavorite',
+  imageEdit: 'imageEdit',
+  imageReset: 'imageReset',
   imageList: 'imageList',
   imageView: 'imageView',
 
