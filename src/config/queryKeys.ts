@@ -7,6 +7,8 @@ export const queryKeys = {
   //user
   userUpdateProfile: 'userUpdateProfile',
   userSetAvatar: 'userSetAvatar',
+  userChangePassword: 'userChangePassword',
+
   // Image
   imageUpload: 'imageUpload',
   imageDelete: 'imageDelete',

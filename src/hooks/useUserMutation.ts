@@ -25,5 +25,14 @@ export const useUserMutation = () => {
     },
   });
 
-  return { mSetAvatar, mProfileUpdate };
+  const mChangePassword = useMutation({
+    mutationKey: [queryKeys.userChangePassword],
+    mutationFn: async (params: any) => {
+      const res = await axios.post('/v1/user/change-password', params);
+
+      return res;
+    },
+  });
+
+  return { mSetAvatar, mProfileUpdate, mChangePassword };
 };

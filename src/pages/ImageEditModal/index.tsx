@@ -53,7 +53,7 @@ function ImageEditModal(props: ImageEditModalProps) {
   return (
     <MiModal title={'Edit image'} isOpen={isOpen} size="xs" onClose={onClose} allowFullScreen>
       <Stack spacing={2} width={'100%'} alignItems="flex-start" p={2}>
-        <KonvaEditor ref={editorRef} imageUrl={'https://konvajs.org/assets/darth-vader.jpg'} />
+        <KonvaEditor ref={editorRef} imageUrl={getImageSrc(imageId)} />
 
         <Stack direction="row" justifyContent="center" width={1}>
           <Button

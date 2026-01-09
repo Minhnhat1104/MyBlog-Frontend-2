@@ -4,14 +4,13 @@ import useImage from 'use-image';
 import Konva from 'konva';
 import { filterConfigs, FilterType } from './config';
 import { Slider, Stack, Tab, Tabs, useTheme } from '@mui/material';
-import { GridOverlay } from './GridOverlay';
 import { useSnackbar } from '~/hooks/useSnackbar';
 import LoadingCircular from '../LoadingCircular';
 
 interface KonvaEditorProps {
   imageUrl: string;
 }
-const STAGE_SIZE = 400;
+const CONTAINER_MAX_SIZE = 400;
 
 export interface KonvaEditorHandle {
   getEditedImage: () => Promise<File | null>;
@@ -21,7 +20,7 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
   const theme = useTheme();
   const { enqueueError } = useSnackbar();
   const stageRef = useRef<Konva.Stage | null>(null);
-  const [imageRef, setImageRef] = useState<Konva.Image | null>(null);
+  const imageRef = useRef<Konva.Image | null>(null);
   const [image] = useImage(imageUrl, 'anonymous');
   const [filter, setFilter] = useState<Record<FilterType, number>>({
     scale: 1,
@@ -45,21 +44,36 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
       });
 
       enqueueError('This function is on develop');
-      return null;
+
       return file;
     },
   }));
 
   // when image is loaded we need to cache the shape
   useEffect(() => {
-    if (imageRef) {
-      // imageRef?.cache();
+    if (image) {
+      let pixelRatio = 1;
+      // console.log('🚀 ~ KonvaEditor ~ image?.naturalWidth:', image?.naturalWidth, image.width);
+      // console.log('🚀 ~ KonvaEditor ~ image?.naturalHeight:', image?.naturalHeight, image.height);
+      if (Math.max(image?.naturalWidth, image?.naturalHeight) > 4000) {
+        pixelRatio = 0.25;
+      } else if (Math.max(image?.naturalWidth, image?.naturalHeight) > 2000) {
+        pixelRatio = 0.5;
+      }
+
+      // reduce resolution to improve performance
+      imageRef?.current?.cache({
+        pixelRatio: pixelRatio,
+      });
     }
-  }, [imageRef]);
+  }, [!!image]);
+
+  const imageWidth = Number(image?.width);
+  const imageHeight = Number(image?.height);
 
   const coverScale = useMemo<number>(() => {
     if (!image) return 1;
-    return Math.min(STAGE_SIZE / image.width, STAGE_SIZE / image.height);
+    return Math.max(imageWidth, imageHeight) / CONTAINER_MAX_SIZE;
   }, [image]);
 
   const handleOnChange = (nVal: number, type: FilterType) => {
@@ -70,51 +84,56 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
 
   return (
     <Stack width={400} sx={{ border: theme.border.main, borderRadius: 1 }}>
-      {!image ? (
-        <LoadingCircular fullHeight />
-      ) : (
-        <>
-          <Stage width={400} height={400} ref={stageRef}>
-            <Layer>
-              <KonvaImage
-                ref={setImageRef}
-                image={image}
-                x={STAGE_SIZE / 2}
-                y={STAGE_SIZE / 2}
-                offsetX={image?.width! / 2}
-                offsetY={image?.height! / 2}
-                scaleX={coverScale * filter?.scale}
-                scaleY={coverScale * filter?.scale}
-                rotation={filter?.rotation}
-                draggable
-                filters={[Konva.Filters.Brightness, Konva.Filters.Contrast]}
-                brightness={filter?.brightness}
-                contrast={filter?.contrast}
-              />
-            </Layer>
+      {!image && <LoadingCircular fullHeight sx={{ height: 400 }} />}
 
-            <GridOverlay width={400} height={400} visible />
-          </Stage>
+      <Stack sx={{ width: 400, height: 400, alignItems: 'center', justifyContent: 'center' }}>
+        <Stage
+          width={imageWidth / coverScale}
+          height={imageHeight / coverScale}
+          ref={stageRef}
+          style={{
+            display: !image ? 'none' : 'block',
+            borderTop: theme.border.main,
+            borderBottom: theme.border.main,
+          }}
+        >
+          <Layer>
+            <KonvaImage
+              ref={imageRef}
+              image={image}
+              x={imageWidth / coverScale / 2}
+              y={imageHeight / coverScale / 2}
+              offsetX={imageWidth / 2}
+              offsetY={imageHeight / 2}
+              scaleX={filter?.scale / coverScale}
+              scaleY={filter?.scale / coverScale}
+              rotation={filter?.rotation}
+              draggable
+              filters={[Konva.Filters.Brightness, Konva.Filters.Contrast]}
+              brightness={filter?.brightness}
+              contrast={filter?.contrast}
+            />
+          </Layer>
+        </Stage>
+      </Stack>
 
-          <Slider
-            size="small"
-            min={filterConfig?.min}
-            max={filterConfig?.max}
-            step={filterConfig?.step}
-            value={filter[filterType]}
-            onChange={(e, nVal) => handleOnChange(nVal, filterType)}
-            aria-label="Small"
-            valueLabelDisplay="on"
-          />
+      <Slider
+        size="small"
+        min={filterConfig?.min}
+        max={filterConfig?.max}
+        step={filterConfig?.step}
+        value={filter[filterType]}
+        onChange={(e, nVal) => handleOnChange(nVal, filterType)}
+        aria-label="Small"
+        valueLabelDisplay="on"
+      />
 
-          <Tabs value={filterType} onChange={(e, nVal) => setFilterType(nVal)} variant="fullWidth">
-            {filterConfigs?.map((_item) => {
-              const Icon = _item?.icon;
-              return <Tab key={_item?.type} icon={<Icon />} label={_item?.label} value={_item?.type} />;
-            })}
-          </Tabs>
-        </>
-      )}
+      <Tabs value={filterType} onChange={(e, nVal) => setFilterType(nVal)} variant="fullWidth">
+        {filterConfigs?.map((_item) => {
+          const Icon = _item?.icon;
+          return <Tab key={_item?.type} icon={<Icon />} label={_item?.label} value={_item?.type} />;
+        })}
+      </Tabs>
     </Stack>
   );
 };

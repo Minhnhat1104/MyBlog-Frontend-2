@@ -12,6 +12,7 @@ import { demoRoute } from '~/pages/Demo/demoRoute';
 import Profile from '~/pages/Profile';
 import ForgetPassword from '~/pages/ForgetPassword';
 import ResetPassword from '~/pages/ResetPassword';
+import ChangePassword from '~/pages/ChangePassword';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -39,6 +40,10 @@ const publicRoutes: RouteObject[] = [
           {
             path: '/profile',
             element: <Profile />,
+          },
+          {
+            path: '/change-password',
+            element: <ChangePassword />,
           },
         ],
       },
