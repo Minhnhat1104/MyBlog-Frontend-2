@@ -29,7 +29,6 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
     contrast: 0,
   });
   const [filterType, setFilterType] = useState<FilterType>(FilterType.scale);
-  console.log('🚀 ~ KonvaEditor ~ filter:', filter?.brightness, filter?.contrast);
 
   useImperativeHandle(ref, () => ({
     getEditedImage: async () => {
@@ -54,8 +53,6 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
   useEffect(() => {
     if (image) {
       let pixelRatio = 1;
-      // console.log('🚀 ~ KonvaEditor ~ image?.naturalWidth:', image?.naturalWidth, image.width);
-      // console.log('🚀 ~ KonvaEditor ~ image?.naturalHeight:', image?.naturalHeight, image.height);
       if (Math.max(image?.naturalWidth, image?.naturalHeight) > 4000) {
         pixelRatio = 0.25;
       } else if (Math.max(image?.naturalWidth, image?.naturalHeight) > 2000) {
@@ -84,16 +81,23 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
   const filterConfig = filterConfigs?.find((_option) => _option?.type === filterType);
 
   return (
-    <Stack width={400} sx={{ border: theme.border.main, borderRadius: 1 }}>
-      {!image && <LoadingCircular fullHeight sx={{ height: 400 }} />}
+    <Stack width={CONTAINER_MAX_SIZE + 3} sx={{ border: theme.border.main, borderRadius: 1 }}>
+      {!image && <LoadingCircular sx={{ height: CONTAINER_MAX_SIZE + 3 }} />}
 
-      <Stack sx={{ width: 400, height: 400, alignItems: 'center', justifyContent: 'center' }}>
+      <Stack
+        sx={{
+          display: !image ? 'none' : 'flex',
+          width: CONTAINER_MAX_SIZE + 3,
+          height: CONTAINER_MAX_SIZE + 3,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <Stage
           width={imageWidth / coverScale}
           height={imageHeight / coverScale}
           ref={stageRef}
           style={{
-            display: !image ? 'none' : 'block',
             borderTop: theme.border.main,
             borderBottom: theme.border.main,
           }}
@@ -126,6 +130,7 @@ const KonvaEditor: React.ForwardRefRenderFunction<KonvaEditorHandle, KonvaEditor
         value={filter[filterType]}
         onChange={(e, nVal) => handleOnChange(nVal, filterType)}
         aria-label="Small"
+        valueLabelDisplay="auto"
       />
 
       <Tabs value={filterType} onChange={(e, nVal) => setFilterType(nVal)} variant="fullWidth">
