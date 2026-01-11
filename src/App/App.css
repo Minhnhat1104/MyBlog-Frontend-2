@@ -11,6 +11,11 @@
   align-items: center;
   text-align: center;
 }
+
+body {
+  transition: background-color 0.3s ease-in-out;
+}
+
 body,
 .App {
   min-height: 100vh;

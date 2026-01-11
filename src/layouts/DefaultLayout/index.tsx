@@ -3,7 +3,7 @@ import React from 'react';
 import { Box, Container, Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 
-function BackgroundLayout({ children }: any) {
+function DefaultLayout() {
   return (
     <Stack height={'100vh'}>
       <Header />
@@ -21,4 +21,4 @@ function BackgroundLayout({ children }: any) {
   );
 }
 
-export default BackgroundLayout;
+export default DefaultLayout;
