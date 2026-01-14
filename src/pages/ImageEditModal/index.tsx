@@ -9,6 +9,8 @@ import KonvaEditor, { KonvaEditorHandle } from '~/components/KonvaEditor';
 import { getImageSrc } from '~/tools/image';
 import { useSnackbar } from '~/hooks/useSnackbar';
 import dayjs, { Dayjs } from 'dayjs';
+import { t } from 'i18next';
+import { LangKey } from '~/lang/langKey';
 
 interface ImageEditModalProps {
   isOpen: boolean;
@@ -36,7 +38,7 @@ function ImageEditModal(props: ImageEditModalProps) {
     const formData = new FormData();
     const file = await editorRef?.current?.getEditedImage();
     if (!file) {
-      enqueueError('Error!');
+      enqueueError(t(LangKey.error));
       return;
     }
 
@@ -68,10 +70,10 @@ function ImageEditModal(props: ImageEditModalProps) {
               editorRef?.current?.resetFitler();
             }}
           >
-            Reset
+            {t(LangKey.reset)}
           </Button>
           <Button type="submit" loading={mEditImage.isPending} variant="contained" onClick={onSubmit}>
-            Save
+            {t(LangKey.saveSuccess)}
           </Button>
         </Stack>
       </Stack>

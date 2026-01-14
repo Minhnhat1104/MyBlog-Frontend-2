@@ -6,6 +6,8 @@ import userImagePlaceholder from '~/assets/img/UserPlaceholder.png';
 import { useRecoilState } from 'recoil';
 import { userState } from '~/atoms';
 import { getUserAvatarSrc } from '~/tools/image';
+import { LangKey } from '~/lang/langKey';
+import { t } from 'i18next';
 
 function AvatarWrite() {
   const [user, setUser] = useRecoilState(userState);
@@ -36,7 +38,7 @@ function AvatarWrite() {
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         <Button variant="contained" onClick={open} loading={mSetAvatar.isPending}>
-          Change avatar
+          {t(LangKey.changeAvatar)}
         </Button>
       </div>
     </Stack>

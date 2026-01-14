@@ -43,4 +43,12 @@ export const langEn: Record<LangKey, string> = {
   newPassword: 'New password',
   confirmPassword: 'Confirm password',
   resetPassword: 'Reset password',
+  resetPasswordInstruction: "No worries, we 'll send you reset instruction.",
+  reset: 'Reset',
+  save: 'Save',
+  register: 'Register',
+  scale: 'Scale',
+  rotation: 'Rotation',
+  brightness: 'Brightness',
+  contrast: 'Contrast',
 };

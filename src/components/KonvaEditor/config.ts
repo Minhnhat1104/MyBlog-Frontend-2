@@ -5,6 +5,7 @@ import {
   SvgIconComponent,
   ZoomInOutlined,
 } from '@mui/icons-material';
+import { t } from 'i18next';
 
 export enum FilterType {
   scale = 'scale',
@@ -25,7 +26,7 @@ interface FilterConfig {
 export const filterConfigs: FilterConfig[] = [
   {
     type: FilterType.scale,
-    label: 'Scale',
+    label: t('scale'),
     min: 0.5,
     max: 1.5,
     step: 0.1,
@@ -33,7 +34,7 @@ export const filterConfigs: FilterConfig[] = [
   },
   {
     type: FilterType.rotation,
-    label: 'Rotation',
+    label: t('rotation'),
     min: -180,
     max: 180,
     step: 1,
@@ -41,7 +42,7 @@ export const filterConfigs: FilterConfig[] = [
   },
   {
     type: FilterType.brightness,
-    label: 'Brightness',
+    label: t('brightness'),
     min: 0,
     max: 2,
     step: 0.1,
@@ -49,7 +50,7 @@ export const filterConfigs: FilterConfig[] = [
   },
   {
     type: FilterType.contrast,
-    label: 'Contrast',
+    label: t('contrast'),
     min: -100,
     max: 100,
     step: 1,

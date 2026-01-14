@@ -9,6 +9,8 @@ import { userState } from '~/atoms';
 import { useSnackbar } from '~/hooks/useSnackbar';
 import { useSearchParams } from 'react-router-dom';
 import { useUserMutation } from '~/hooks/useUserMutation';
+import { t } from 'i18next';
+import { LangKey } from '~/lang/langKey';
 
 type ChangePasswordFormData = {
   oldPassword: string;
@@ -57,32 +59,32 @@ function ChangePassword() {
         spacing={3}
       >
         <Typography variant="h1" fontWeight={500} textAlign="center">
-          Change password
+          {t(LangKey.changePassword)}
         </Typography>
 
         <PasswordInput
-          label="Current password"
+          label={t(LangKey.currentPassword)}
           helperText={errors.oldPassword?.message}
           error={!!errors.oldPassword}
           {...register('oldPassword', { required: true, maxLength: 50 })}
         />
 
         <PasswordInput
-          label="New Password"
+          label={t(LangKey.newPassword)}
           helperText={errors.newPassword1?.message}
           error={!!errors.newPassword1}
           {...register('newPassword1', { required: true, maxLength: 50 })}
         />
 
         <PasswordInput
-          label="Confirm password"
+          label={t(LangKey.confirmPassword)}
           helperText={errors.newPassword2?.message}
           error={!!errors.newPassword2}
           {...register('newPassword2', { required: true, maxLength: 50 })}
         />
 
         <Button type="submit" variant="contained" loading={mChangePassword.isPending}>
-          Reset password
+          {t(LangKey.resetPassword)}
         </Button>
       </Stack>
     </form>

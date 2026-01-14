@@ -1,6 +1,8 @@
 import { Box, List, ListItem, Stack, Typography, useTheme } from '@mui/material';
+import { t } from 'i18next';
 import React, { type CSSProperties, useEffect, useMemo } from 'react';
 import { type FileWithPath, useDropzone } from 'react-dropzone';
+import { LangKey } from '~/lang/langKey';
 import { ellipsisSx } from '~/tools/style';
 
 interface ImageDropZoneProps {
@@ -9,34 +11,6 @@ interface ImageDropZoneProps {
   onChange: (nVal: FileWithPath[]) => void;
   disabled?: boolean;
 }
-
-const baseStyle: CSSProperties = {
-  flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: '#eeeeee',
-  borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
-  color: '#bdbdbd',
-  outline: 'none',
-  transition: 'border .24s ease-in-out',
-};
-
-const focusedStyle = {
-  borderColor: '#2196f3',
-};
-
-const acceptStyle = {
-  borderColor: '#00e676',
-};
-
-const rejectStyle = {
-  borderColor: '#ff1744',
-};
 
 function ImageDropZone({ name, value, onChange, disabled = false }: ImageDropZoneProps) {
   const theme = useTheme();
@@ -64,21 +38,46 @@ function ImageDropZone({ name, value, onChange, disabled = false }: ImageDropZon
     }
   }, [value]);
 
-  const style = useMemo<CSSProperties>(
-    () => ({
-      ...baseStyle,
-      ...(isFocused ? focusedStyle : {}),
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
-    }),
-    [isFocused, isDragAccept, isDragReject]
-  );
+  const baseStyle: CSSProperties = {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '20px',
+    borderWidth: 2,
+    borderRadius: 2,
+    borderColor: '#eeeeee',
+    borderStyle: 'dashed',
+    backgroundColor: 'transparent',
+    color: '#bdbdbd',
+    outline: 'none',
+    transition: 'border .24s ease-in-out',
+  };
+
+  const focusedStyle = {
+    borderColor: '#2196f3',
+  };
+
+  const acceptStyle = {
+    borderColor: '#00e676',
+  };
+
+  const rejectStyle = {
+    borderColor: '#ff1744',
+  };
+
+  const style: CSSProperties = {
+    ...baseStyle,
+    ...(isFocused ? focusedStyle : {}),
+    ...(isDragAccept ? acceptStyle : {}),
+    ...(isDragReject ? rejectStyle : {}),
+  };
 
   return (
     <section style={{ width: '100%' }}>
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p> {t(LangKey.dragAndDropFileToUpload)}</p>
       </div>
 
       {value?.length > 0 && (

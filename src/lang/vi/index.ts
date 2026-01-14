@@ -43,4 +43,12 @@ export const langVi: Record<LangKey, string> = {
   newPassword: 'Mật khẩu mới',
   confirmPassword: 'Xác nhận mật khẩu',
   resetPassword: 'Đặt lại mật khẩu',
+  resetPasswordInstruction: 'Đừng lo, chúng tôi sẽ gửi hướng dẫn đặt lại mật khẩu cho bạn.',
+  reset: 'Đặt lại',
+  save: 'Lưu',
+  register: 'Đăng ký',
+  scale: 'Tỷ lệ',
+  rotation: 'Xoay',
+  brightness: 'Độ sáng',
+  contrast: 'Đọ tương phản',
 };

@@ -7,6 +7,8 @@ import { useRecoilState } from 'recoil';
 import { userState } from '~/atoms';
 import { useUserMutation } from '~/hooks/useUserMutation';
 import AvatarWrite from './AvatarWrite';
+import { t } from 'i18next';
+import { LangKey } from '~/lang/langKey';
 
 type ProfileFormData = {
   email: string;
@@ -71,7 +73,7 @@ function Profile() {
         spacing={3}
       >
         <Typography variant="h1" fontWeight={500} textAlign="center">
-          Profile settings
+          {t(LangKey.profileSettings)}
         </Typography>
 
         <AvatarWrite />
@@ -80,7 +82,7 @@ function Profile() {
             <TextField
               fullWidth
               size="medium"
-              label="First name"
+              label={t(LangKey.firstName)}
               helperText={errors.firstName?.message}
               error={!!errors.firstName}
               {...register('firstName', { required: true, maxLength: 50 })}
@@ -90,7 +92,7 @@ function Profile() {
             <TextField
               fullWidth
               size="medium"
-              label="Last name"
+              label={t(LangKey.lastName)}
               helperText={errors.lastName?.message}
               error={!!errors.lastName}
               {...register('lastName', { required: true, maxLength: 50 })}
@@ -101,7 +103,7 @@ function Profile() {
           fullWidth
           disabled
           size="medium"
-          label="Email"
+          label={t(LangKey.email)}
           helperText={errors.email?.message}
           error={!!errors.email}
           type="email"
@@ -125,7 +127,7 @@ function Profile() {
           })}
         /> */}
         <Button type="submit" variant="contained" loading={mProfileUpdate.isPending}>
-          Save profile
+          {t(LangKey.saveProfile)}
         </Button>
       </Stack>
     </form>

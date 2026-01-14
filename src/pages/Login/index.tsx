@@ -10,7 +10,7 @@ import { useSnackbar } from '~/hooks/useSnackbar';
 // import { t } from 'i18next';
 import { LangKey } from '~/lang/langKey';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
+import i18next, { t } from 'i18next';
 
 type LoginFormData = {
   email: string;
@@ -21,7 +21,6 @@ function Login() {
   const theme = useTheme();
   const navigate = useNavigate();
   const { mUserLogin } = useAuthMutation();
-  const { t } = useTranslation();
   const { enqueueError } = useSnackbar();
   const loginPath = useRecoilValue(loginPathState);
   const setUser = useSetRecoilState(userState);

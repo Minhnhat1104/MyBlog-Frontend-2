@@ -5,6 +5,8 @@ import { useAuthMutation } from '~/hooks/useAuthMutation';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import PasswordInput from '~/components/PasswordInput';
 import { ArrowBack } from '@mui/icons-material';
+import { t } from 'i18next';
+import { LangKey } from '~/lang/langKey';
 
 type RegisterFormData = {
   email: string;
@@ -54,14 +56,14 @@ function Register() {
           spacing={3}
         >
           <Typography variant="h1" fontWeight={500} textAlign="center">
-            Register
+            {t(LangKey.register)}
           </Typography>
           <Grid container spacing={3}>
             <Grid size={6}>
               <TextField
                 fullWidth
                 size="medium"
-                label="First name"
+                label={t(LangKey.firstName)}
                 helperText={errors.firstName?.message}
                 error={!!errors.firstName}
                 {...register('firstName', { required: true, maxLength: 50 })}
@@ -71,7 +73,7 @@ function Register() {
               <TextField
                 fullWidth
                 size="medium"
-                label="Last name"
+                label={t(LangKey.lastName)}
                 helperText={errors.lastName?.message}
                 error={!!errors.lastName}
                 {...register('lastName', { required: true, maxLength: 50 })}
@@ -84,7 +86,7 @@ function Register() {
             label="Email"
             helperText={errors.email?.message}
             error={!!errors.email}
-            type="email"
+            type={t(LangKey.email)}
             // placeholder="Enter your email"
             {...register('email', {
               required: true,
@@ -92,13 +94,13 @@ function Register() {
             })}
           />
           <PasswordInput
-            label="Password"
+            label={t(LangKey.password)}
             helperText={errors.password?.message}
             error={!!errors.password}
             {...register('password', { required: true, maxLength: 50 })}
           />
           <Button type="submit" variant="contained" loading={mRegisterUser.isPending}>
-            Create account
+            {t(LangKey.createAccount)}
           </Button>
           <Stack
             direction="row"
@@ -109,7 +111,7 @@ function Register() {
             color="primary.main"
           >
             <ArrowBack fontSize="small" sx={{ mr: 1 }} />
-            <Typography>Back to login</Typography>
+            <Typography>{t(LangKey.backToLogin)}</Typography>
           </Stack>
         </Stack>
       </form>

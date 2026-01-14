@@ -41,4 +41,12 @@ export enum LangKey {
   newPassword = 'newPassword',
   confirmPassword = 'confirmPassword',
   resetPassword = 'resetPassword',
+  resetPasswordInstruction = 'resetPasswordInstruction',
+  reset = 'reset',
+  save = 'save',
+  register = 'register',
+  scale = 'scale',
+  rotation = 'rotation',
+  brightness = 'brightness',
+  contrast = 'contrast',
 }

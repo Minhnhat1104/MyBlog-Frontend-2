@@ -1,12 +1,14 @@
 import { Inventory2Outlined } from '@mui/icons-material';
 import { Stack, Typography, useTheme } from '@mui/material';
+import { t } from 'i18next';
 import React from 'react';
+import { LangKey } from '~/lang/langKey';
 
 interface NoDataProps {
   label?: string;
 }
 
-const NoData = ({ label = 'No data' }: NoDataProps) => {
+const NoData = ({ label = t(LangKey.noData) }: NoDataProps) => {
   const theme = useTheme();
   return (
     <Stack
