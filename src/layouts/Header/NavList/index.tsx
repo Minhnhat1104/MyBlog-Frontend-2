@@ -2,14 +2,16 @@ import { Button, Stack } from '@mui/material';
 import { Link, useMatch } from 'react-router-dom';
 import { LabelValue } from '~/types';
 import Item from './Item';
+import { t } from 'i18next';
+import { LangKey } from '~/lang/langKey';
 
 const items: LabelValue[] = [
   {
-    label: 'Explore',
+    label: t(LangKey.explore),
     value: '/explore',
   },
   {
-    label: 'My photos',
+    label: t(LangKey.myPhotos),
     value: '/my-photos',
   },
 ];
