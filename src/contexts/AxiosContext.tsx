@@ -26,8 +26,7 @@ const AxiosContext = ({}: AxiosContextProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const refreshToken = cookieService.get(COOKIE_KEY.REFRESH_TOKEN);
-  const [isLoading, setIsLoading] = useState<boolean>(refreshToken ? true : false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const initPath = useRef<string>(pathname);
 
   useEffect(() => {
@@ -41,6 +40,7 @@ const AxiosContext = ({}: AxiosContextProps) => {
       },
       (err) => {
         if (err?.response?.status === 401) {
+          console.error('Login expired:', err);
           navigate('/login');
           setUser(null);
         }
@@ -53,15 +53,13 @@ const AxiosContext = ({}: AxiosContextProps) => {
     );
 
     (async () => {
-      if (refreshToken) {
-        try {
-          const res = await axios.post('/v1/auth/refresh');
-          setUser(res?.data?.rows);
-        } catch (e) {
-          console.log('Get infor error:', e);
-        } finally {
-          setIsLoading(false);
-        }
+      try {
+        const res = await axios.post('/v1/auth/refresh');
+        setUser(res?.data?.rows);
+      } catch (e) {
+        console.log('Get infor error:', e);
+      } finally {
+        setIsLoading(false);
       }
     })();
 
