@@ -13,33 +13,35 @@ import ForgetPassword from '~/pages/ForgetPassword';
 import ResetPassword from '~/pages/ResetPassword';
 import ChangePassword from '~/pages/ChangePassword';
 import AuthGuardContext from '~/contexts/AuthGuardContext';
+import GuestGuardContext from '~/contexts/GuestGuardContext';
 
 const publicRoutes: RouteObject[] = [
   {
     element: <AxiosContext />,
     children: [
       {
-        element: <BackgroundLayout />,
+        element: <GuestGuardContext />,
         children: [
           {
-            path: '/login',
-            element: <Login />,
-          },
-          {
-            path: '/register',
-            element: <Register />,
-          },
-          {
-            path: '/forgot-password',
-            element: <ForgetPassword />,
-          },
-          {
-            path: '/reset-password',
-            element: <ResetPassword />,
-          },
-          {
-            path: '/change-password',
-            element: <ChangePassword />,
+            element: <BackgroundLayout />,
+            children: [
+              {
+                path: '/login',
+                element: <Login />,
+              },
+              {
+                path: '/register',
+                element: <Register />,
+              },
+              {
+                path: '/forgot-password',
+                element: <ForgetPassword />,
+              },
+              {
+                path: '/reset-password',
+                element: <ResetPassword />,
+              },
+            ],
           },
         ],
       },
@@ -75,6 +77,10 @@ const publicRoutes: RouteObject[] = [
               {
                 path: '/profile',
                 element: <Profile />,
+              },
+              {
+                path: '/change-password',
+                element: <ChangePassword />,
               },
             ],
           },

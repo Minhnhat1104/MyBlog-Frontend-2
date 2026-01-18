@@ -3,7 +3,7 @@ import { Avatar, IconButton, ImageListItem, ImageListItemBar, Slide, Stack, Typo
 import React, { useRef, useState } from 'react';
 import { BASE_URL } from '~/config/constants';
 import BlurIconButton from './BlurIconButton';
-import { downloadURI, getImageSrc, getUserAvatarSrc } from '~/tools/image';
+import { downloadURI, getImageSrc, getUserAvatarSrc, ImageAuto, ImageColorSpace } from '~/tools/image';
 import { useImageMutation } from '~/hooks/Image/useImageMutation';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '~/config/queryKeys';
@@ -61,9 +61,9 @@ const Item = ({ data }: ItemProps) => {
       >
         <img
           srcSet={`
-            ${getImageSrc(data?.id, { v: currentTimeStamp, width: 400 })} 400w,
-            ${getImageSrc(data?.id, { v: currentTimeStamp, width: 800 })} 800w,
-            ${getImageSrc(data?.id, { v: currentTimeStamp, width: 1600 })} 1600w
+            ${getImageSrc(data?.id, { v: currentTimeStamp, width: 300, autos: [ImageAuto.compress, ImageAuto.format], cs: ImageColorSpace.tinysrgb })} 400w,
+            ${getImageSrc(data?.id, { v: currentTimeStamp, width: 500, autos: [ImageAuto.compress, ImageAuto.format], cs: ImageColorSpace.tinysrgb })} 800w,
+            ${getImageSrc(data?.id, { v: currentTimeStamp, width: 1200, autos: [ImageAuto.compress, ImageAuto.format], cs: ImageColorSpace.tinysrgb })} 1600w
           `}
           sizes="(max-width: 768px) 100vw, 40vw"
           src={getImageSrc(data?.id, { v: currentTimeStamp, width: 800 })}
