@@ -8,6 +8,7 @@ import { userState } from '~/atoms';
 import { getUserAvatarSrc } from '~/tools/image';
 import { LangKey } from '~/lang/langKey';
 import { t } from 'i18next';
+import BaseAvatar from '~/components/BaseAvatar';
 
 function AvatarWrite() {
   const [user, setUser] = useRecoilState(userState);
@@ -26,14 +27,7 @@ function AvatarWrite() {
 
   return (
     <Stack direction="row" alignItems="center" spacing={3}>
-      <Avatar
-        alt="avatar"
-        src={getUserAvatarSrc(user?.id || '')}
-        sx={{
-          width: 80,
-          height: 80,
-        }}
-      />
+      <BaseAvatar id={user?.id} name={user?.first_name} size="extra-large" />
 
       <div {...getRootProps()}>
         <input {...getInputProps()} />

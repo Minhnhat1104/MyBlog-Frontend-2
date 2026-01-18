@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
 import ImageEditModal from '../ImageEditModal';
 import dayjs from 'dayjs';
+import BaseAvatar from '~/components/BaseAvatar';
 interface ItemProps {
   data: any;
 }
@@ -93,11 +94,7 @@ const Item = ({ data }: ItemProps) => {
         <Slide in={isHover} direction="up" container={containerRef.current} timeout={200}>
           <Stack direction="row" alignItems="center" width={1} sx={{ position: 'absolute', bottom: 8, px: '8px' }}>
             <Stack direction="row" alignItems="center" spacing={1.5}>
-              <Avatar
-                alt="profile user"
-                src={getUserAvatarSrc(data?.creator?.id || '')}
-                sx={{ width: 32, height: 32 }}
-              />
+              <BaseAvatar id={data?.creator?.id} name={data?.creator?.first_name} />
 
               <Typography color="#fff" sx={{ fontWeight: 500, fontSize: 18 }}>
                 {data?.name}

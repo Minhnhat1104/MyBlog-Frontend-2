@@ -8,7 +8,7 @@ import { alpha, useTheme } from '@mui/material/styles';
 import ProfileContent from './ProfileContent';
 import { useRecoilValue } from 'recoil';
 import { userState } from '~/atoms';
-import { getUserAvatarSrc } from '~/tools/image';
+import BaseAvatar from '~/components/BaseAvatar';
 
 const Profile = () => {
   const theme = useTheme();
@@ -33,7 +33,7 @@ const Profile = () => {
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <Avatar alt="profile user" src={getUserAvatarSrc(user?.id || '')} sx={{ width: 32, height: 32 }} />
+        <BaseAvatar id={user?.id} name={user?.first_name} />
       </IconButton>
 
       <Popper open={open} anchorEl={anchorRef?.current} transition placement="bottom-end" sx={{ zIndex: 1 }}>

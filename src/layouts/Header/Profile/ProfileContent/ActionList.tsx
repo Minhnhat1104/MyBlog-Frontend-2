@@ -54,7 +54,7 @@ const ActionList = (props: ActionListProps) => {
         const Icon = _item?.icon;
 
         return (
-          <ListItem disablePadding>
+          <ListItem key={_item?.value} disablePadding>
             <ListItemButton
               LinkComponent={Link}
               onClick={() => {
