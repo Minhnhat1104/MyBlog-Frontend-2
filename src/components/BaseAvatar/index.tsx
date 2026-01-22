@@ -27,7 +27,7 @@ function stringToColor(string: string) {
 interface BaseAvatarProps {
   name: string | undefined;
   id: string | number | undefined;
-  size?: 'small' | 'medium' | 'large' | 'extra-large';
+  size?: 'small' | 'medium' | 'large' | 'extra-large' | number;
 }
 
 const sizeMap = {
@@ -42,7 +42,11 @@ const BaseAvatar = ({ id, name, size = 'medium' }: BaseAvatarProps) => {
     <Avatar
       alt={name}
       src={getUserAvatarSrc(id || '')}
-      sx={{ width: sizeMap[size], height: sizeMap[size], bgcolor: stringToColor(name || 'Unknown') }}
+      sx={{
+        width: typeof size === 'number' ? size : sizeMap[size],
+        height: typeof size === 'number' ? size : sizeMap[size],
+        bgcolor: stringToColor(name || 'Unknown'),
+      }}
     >
       {`${name?.split(' ')?.[0]?.[0] || 'U'} ${name?.split(' ')?.[1]?.[0] || ''}`}
     </Avatar>
