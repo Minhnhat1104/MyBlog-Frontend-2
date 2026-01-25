@@ -32,35 +32,29 @@ function AvatarWrite() {
 
   const handleSave = ({ file, editFile }: { file: File; editFile: File | null }) => {
     const formData = new FormData();
-    formData.append('photo', file);
-    if (editFile) {
-      formData.append('edit_photo', editFile);
-    }
+
+    formData.append('photo', editFile || file);
     mSetAvatar.mutateAsync(formData);
   };
 
   return (
     <>
-      <Stack direction="row" alignItems="center" spacing={3}>
-        <Box
-          sx={{
-            p: 0.75,
-            boxShadow: 'rgba(0, 0, 0, 0.15) 1px 1px 1px',
-            border: theme.border.light,
-            cursor: 'pointer',
-            position: 'relative',
-          }}
-        >
-          <Edit sx={{ position: 'absolute', top: 0, right: 0, fontSize: 16 }} />
-          <img src={getUserAvatarSrc(user?.id || '')} style={{ width: 120, height: 120, objectFit: 'cover' }} />
-        </Box>
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <img
+          src={getUserAvatarSrc(user?.id || '')}
+          style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: 999 }}
+        />
 
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          <Button variant="contained" onClick={open} loading={mSetAvatar.isPending}>
+          <Button variant="contained" onClick={open} loading={mSetAvatar.isPending} size="small">
             {t(LangKey.changeAvatar)}
           </Button>
         </div>
+
+        <Button variant="contained" onClick={open} loading={mSetAvatar.isPending} size="small" color="secondary">
+          Delete
+        </Button>
       </Stack>
 
       {openAvatarWrite?.isOpen && openAvatarWrite?.file && (
